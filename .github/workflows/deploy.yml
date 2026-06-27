@@ -52,7 +52,10 @@ jobs:
           name: claritycrew-build
           path: build/web
 
+      - name: Authenticate with service account
+        run: echo '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}' > /tmp/gcp-key.json
+
       - name: Deploy to Firebase
-        run: firebase deploy --only hosting --project claritycrew-aa67a --public build/web --token "$FIREBASE_TOKEN"
+        run: firebase deploy --only hosting --project claritycrew-aa67a --public build/web
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-key.json
