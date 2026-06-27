@@ -6,10 +6,17 @@ class AuthService {
   FirebaseFirestore? _firestore;
 
   AuthService() {
+    _ensureFirebase();
+  }
+
+  void _ensureFirebase() {
+    if (_auth != null) return;
     try {
       _auth = FirebaseAuth.instance;
       _firestore = FirebaseFirestore.instance;
-    } catch (_) {}
+    } catch (_) {
+      Future.delayed(const Duration(seconds: 3), _ensureFirebase);
+    }
   }
 
   Stream<User?> get authStateChanges =>

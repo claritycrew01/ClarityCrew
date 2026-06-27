@@ -6,19 +6,10 @@ import 'providers/lesson_provider.dart';
 import 'providers/progress_provider.dart';
 import 'providers/accessibility_provider.dart';
 import 'providers/ai_provider.dart';
-import 'services/firebase_service.dart';
 import 'app.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  try {
-    await FirebaseService().initialize().timeout(
-      const Duration(seconds: 5),
-    );
-  } catch (e) {
-    // Firebase init timed out or failed; app runs in offline/mock mode
-  }
 
   runApp(
     MultiProvider(

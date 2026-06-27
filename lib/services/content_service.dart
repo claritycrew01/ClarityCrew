@@ -10,11 +10,22 @@ import '../utils/constants.dart';
 
 class ContentService {
   FirebaseFirestore? _firestore;
+  bool _retryScheduled = false;
 
   ContentService() {
+    _ensureFirebase();
+  }
+
+  void _ensureFirebase() {
+    if (_firestore != null) return;
     try {
       _firestore = FirebaseFirestore.instance;
-    } catch (_) {}
+    } catch (_) {
+      if (!_retryScheduled) {
+        _retryScheduled = true;
+        Future.delayed(const Duration(seconds: 3), _ensureFirebase);
+      }
+    }
   }
 
   Future<List<Course>> getCourses({String? category}) async {
