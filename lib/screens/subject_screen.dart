@@ -201,10 +201,15 @@ class _UnitsSheet extends StatefulWidget {
 }
 
 class _UnitsSheetState extends State<_UnitsSheet> {
+  String? _selectedUnitId;
+  String? _selectedUnitTitle;
+
   @override
   Widget build(BuildContext context) {
     final units = widget.provider.units;
     final lessons = widget.provider.lessons;
+
+    final showLessons = _selectedUnitId != null;
 
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
@@ -229,77 +234,140 @@ class _UnitsSheetState extends State<_UnitsSheet> {
           ),
           Padding(
             padding: const EdgeInsets.all(24),
-            child: Text(widget.subjectTitle,
-                style: ClarityTypography.headlineMedium),
+            child: Row(
+              children: [
+                if (showLessons)
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () => setState(() {
+                      _selectedUnitId = null;
+                      _selectedUnitTitle = null;
+                    }),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                if (showLessons) const SizedBox(width: 8),
+                Text(
+                    showLessons ? _selectedUnitTitle! : widget.subjectTitle,
+                    style: ClarityTypography.headlineMedium),
+              ],
+            ),
           ),
           Expanded(
-            child: units.isEmpty
-                ? Center(
-                    child: Text('No units available',
-                        style: ClarityTypography.bodyMedium
-                            .copyWith(
-                                color: ClarityColors
-                                    .textSecondary)),
-                  )
-                : ListView.builder(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 24),
-                    itemCount: units.length,
-                    itemBuilder: (context, index) {
-                      final unit = units[index];
-                      return ClarityCard(
-                        onTap: () =>
-                            widget.onUnitTap(unit.id),
-                        padding:
-                            const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  padding:
-                                      const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        ClarityColors.primary
-                                            .withOpacity(0.1),
-                                    borderRadius:
-                                        BorderRadius.circular(
-                                            8),
-                                  ),
-                                  child: const Icon(
-                                      Icons
-                                          .folder_outlined,
-                                      size: 18,
-                                      color:
-                                          ClarityColors
-                                              .primary),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                      unit.title,
-                                      style:
-                                          ClarityTypography
-                                              .titleMedium),
-                                ),
-                                Icon(
-                                    Icons.chevron_right,
-                                    size: 20,
-                                    color: ClarityColors
-                                        .textTertiary),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+            child: showLessons ? _buildLessonList(lessons) : _buildUnitList(units),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildUnitList(List units) {
+    if (units.isEmpty) {
+      return Center(
+        child: Text('No units available',
+            style: ClarityTypography.bodyMedium
+                .copyWith(color: ClarityColors.textSecondary)),
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      itemCount: units.length,
+      itemBuilder: (context, index) {
+        final unit = units[index];
+        return ClarityCard(
+          onTap: () {
+            widget.provider.selectUnit(unit.id);
+            setState(() {
+              _selectedUnitId = unit.id;
+              _selectedUnitTitle = unit.title;
+            });
+          },
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: ClarityColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(Icons.folder_outlined,
+                    size: 18, color: ClarityColors.primary),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(unit.title,
+                    style: ClarityTypography.titleMedium),
+              ),
+              const Icon(Icons.chevron_right,
+                  size: 20, color: ClarityColors.textTertiary),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLessonList(List lessons) {
+    if (lessons.isEmpty) {
+      return Center(
+        child: Text('No lessons available yet',
+            style: ClarityTypography.bodyMedium
+                .copyWith(color: ClarityColors.textSecondary)),
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      itemCount: lessons.length,
+      itemBuilder: (context, index) {
+        final lesson = lessons[index];
+        return ClarityCard(
+          onTap: () => widget.onLessonTap(lesson.id),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: ClarityColors.info.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(Icons.article_outlined,
+                    size: 18, color: ClarityColors.info),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(lesson.title,
+                        style: ClarityTypography.titleMedium),
+                    const SizedBox(height: 4),
+                    Text(lesson.description,
+                        style: ClarityTypography.bodySmall
+                            .copyWith(color: ClarityColors.textSecondary),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: ClarityColors.primaryLight.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text('${lesson.estimatedMinutes} min',
+                    style: ClarityTypography.labelSmall.copyWith(
+                        color: ClarityColors.primary)),
+              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.play_circle_outline,
+                  size: 24, color: ClarityColors.primary),
+            ],
+          ),
+        );
+      },
     );
   }
 }
