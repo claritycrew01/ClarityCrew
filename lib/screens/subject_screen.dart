@@ -138,15 +138,10 @@ class _SubjectScreenState extends State<SubjectScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _UnitsSheet(
-        provider: provider,
+      builder: (sheetContext) => _UnitsSheet(
         subjectTitle: title,
-        onUnitTap: (unitId) {
-          Navigator.pop(context);
-          provider.selectUnit(unitId);
-        },
         onLessonTap: (lessonId) {
-          Navigator.pop(context);
+          Navigator.pop(sheetContext);
           context.go('/lesson/$lessonId');
         },
       ),
@@ -184,15 +179,11 @@ class _SubjectScreenState extends State<SubjectScreen> {
 }
 
 class _UnitsSheet extends StatefulWidget {
-  final CourseProvider provider;
   final String subjectTitle;
-  final ValueChanged<String> onUnitTap;
   final ValueChanged<String> onLessonTap;
 
   const _UnitsSheet({
-    required this.provider,
     required this.subjectTitle,
-    required this.onUnitTap,
     required this.onLessonTap,
   });
 
@@ -203,11 +194,13 @@ class _UnitsSheet extends StatefulWidget {
 class _UnitsSheetState extends State<_UnitsSheet> {
   String? _selectedUnitId;
   String? _selectedUnitTitle;
+  bool _isLoadingLessons = false;
 
   @override
   Widget build(BuildContext context) {
-    final units = widget.provider.units;
-    final lessons = widget.provider.lessons;
+    final provider = context.watch<CourseProvider>();
+    final units = provider.units;
+    final lessons = provider.lessons;
 
     final showLessons = _selectedUnitId != null;
 
@@ -247,14 +240,20 @@ class _UnitsSheetState extends State<_UnitsSheet> {
                     constraints: const BoxConstraints(),
                   ),
                 if (showLessons) const SizedBox(width: 8),
-                Text(
-                    showLessons ? _selectedUnitTitle! : widget.subjectTitle,
-                    style: ClarityTypography.headlineMedium),
+                Expanded(
+                  child: Text(
+                      showLessons ? _selectedUnitTitle! : widget.subjectTitle,
+                      style: ClarityTypography.headlineMedium),
+                ),
               ],
             ),
           ),
           Expanded(
-            child: showLessons ? _buildLessonList(lessons) : _buildUnitList(units),
+            child: showLessons
+                ? (_isLoadingLessons
+                    ? const ClarityLoadingIndicator(message: 'Loading lessons...')
+                    : _buildLessonList(lessons))
+                : _buildUnitList(units),
           ),
         ],
       ),
@@ -275,13 +274,7 @@ class _UnitsSheetState extends State<_UnitsSheet> {
       itemBuilder: (context, index) {
         final unit = units[index];
         return ClarityCard(
-          onTap: () {
-            widget.provider.selectUnit(unit.id);
-            setState(() {
-              _selectedUnitId = unit.id;
-              _selectedUnitTitle = unit.title;
-            });
-          },
+          onTap: () => _onUnitTap(unit),
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
@@ -306,6 +299,18 @@ class _UnitsSheetState extends State<_UnitsSheet> {
         );
       },
     );
+  }
+
+  void _onUnitTap(dynamic unit) async {
+    setState(() {
+      _selectedUnitId = unit.id;
+      _selectedUnitTitle = unit.title;
+      _isLoadingLessons = true;
+    });
+    await context.read<CourseProvider>().selectUnit(unit.id);
+    if (mounted) {
+      setState(() => _isLoadingLessons = false);
+    }
   }
 
   Widget _buildLessonList(List lessons) {
