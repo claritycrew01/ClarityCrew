@@ -20,11 +20,20 @@ class ContentService {
     try {
       _firestore = FirebaseFirestore.instance;
     } catch (_) {
-      Future.delayed(const Duration(seconds: 2), _ensureFirebase);
+      Future.delayed(const Duration(seconds: 1), _ensureFirebase);
+    }
+  }
+
+  Future<void> _waitForFirebase() async {
+    if (_firestore != null) return;
+    for (int i = 0; i < 30; i++) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (_firestore != null) return;
     }
   }
 
   Future<List<Course>> getCourses({String? category}) async {
+    await _waitForFirebase();
     if (_firestore == null) return [];
     Query query = _firestore!
         .collection(AppConstants.collectionCourses)
@@ -42,6 +51,7 @@ class ContentService {
   }
 
   Future<Course?> getCourse(String courseId) async {
+    await _waitForFirebase();
     if (_firestore == null) return null;
     final doc =
         await _firestore!.collection(AppConstants.collectionCourses).doc(courseId).get();
@@ -50,6 +60,7 @@ class ContentService {
   }
 
   Future<List<Subject>> getSubjects(String courseId) async {
+    await _waitForFirebase();
     if (_firestore == null) return [];
     final snapshot = await _firestore!
         .collection(AppConstants.collectionSubjects)
@@ -63,6 +74,7 @@ class ContentService {
   }
 
   Future<Subject?> getSubject(String subjectId) async {
+    await _waitForFirebase();
     if (_firestore == null) return null;
     final doc = await _firestore!
         .collection(AppConstants.collectionSubjects)
@@ -73,6 +85,7 @@ class ContentService {
   }
 
   Future<List<Unit>> getUnits(String subjectId) async {
+    await _waitForFirebase();
     if (_firestore == null) return [];
     final snapshot = await _firestore!
         .collection(AppConstants.collectionUnits)
@@ -86,6 +99,7 @@ class ContentService {
   }
 
   Future<Unit?> getUnit(String unitId) async {
+    await _waitForFirebase();
     if (_firestore == null) return null;
     final doc = await _firestore!
         .collection(AppConstants.collectionUnits)
@@ -96,6 +110,7 @@ class ContentService {
   }
 
   Future<List<Lesson>> getLessons(String unitId) async {
+    await _waitForFirebase();
     if (_firestore == null) return [];
     final snapshot = await _firestore!
         .collection(AppConstants.collectionLessons)
@@ -109,6 +124,7 @@ class ContentService {
   }
 
   Future<Lesson?> getLesson(String lessonId) async {
+    await _waitForFirebase();
     if (_firestore == null) return null;
     final doc = await _firestore!
         .collection(AppConstants.collectionLessons)
@@ -119,6 +135,7 @@ class ContentService {
   }
 
   Future<List<QuizQuestion>> getQuizQuestions(String quizId) async {
+    await _waitForFirebase();
     if (_firestore == null) return [];
     final snapshot = await _firestore!
         .collection(AppConstants.collectionQuizzes)
@@ -132,6 +149,7 @@ class ContentService {
   }
 
   Future<List<Exercise>> getExercises(String lessonId) async {
+    await _waitForFirebase();
     if (_firestore == null) return [];
     final snapshot = await _firestore!
         .collection(AppConstants.collectionExercises)
@@ -145,6 +163,7 @@ class ContentService {
   }
 
   Future<List<Course>> searchContent(String query) async {
+    await _waitForFirebase();
     if (_firestore == null) return [];
     final snapshot = await _firestore!
         .collection(AppConstants.collectionCourses)
@@ -165,6 +184,7 @@ class ContentService {
   }
 
   Future<void> importKolibriContent(Map<String, dynamic> kolibriData) async {
+    await _waitForFirebase();
     if (_firestore == null) return;
     final batch = _firestore!.batch();
 
