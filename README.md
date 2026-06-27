@@ -30,7 +30,16 @@ lib/
 - **UserProgress**, **RecentActivity**, **Recommendation** track personalization
 - **ContentSource** for Kolibri ingestion with source IDs and versioning
 
-## Setup
+## Zero-Install Deploy (CI Only)
+
+You don't need Flutter installed locally. The GitHub Action in `.github/workflows/deploy.yml` handles everything:
+
+1. Create a Firebase project named `claritycrew`
+2. Run `firebase login:ci` locally (one-time) to get a token
+3. Add the token as `FIREBASE_TOKEN` in your repo → Settings → Secrets
+4. Push to `master` — the Action will build and deploy automatically
+
+## Local Setup (optional)
 
 1. Install Flutter SDK (stable channel, >=3.1.0)
 2. Clone this repo
