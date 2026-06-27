@@ -56,6 +56,6 @@ jobs:
         run: echo '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}' > /tmp/gcp-key.json
 
       - name: Deploy to Firebase
-        run: firebase deploy --only hosting --project claritycrew --public build/web
+        run: firebase deploy --only hosting --project claritycrew-aa67a --public build/web
         env:
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-key.json

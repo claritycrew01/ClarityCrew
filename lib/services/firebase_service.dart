@@ -14,9 +14,9 @@ class FirebaseService {
         apiKey: 'YOUR_API_KEY',
         appId: 'YOUR_APP_ID',
         messagingSenderId: 'YOUR_SENDER_ID',
-        projectId: 'claritycrew',
-        authDomain: 'claritycrew.firebaseapp.com',
-        storageBucket: 'claritycrew.appspot.com',
+        projectId: 'claritycrew-aa67a',
+        authDomain: 'claritycrew-aa67a.firebaseapp.com',
+        storageBucket: 'claritycrew-aa67a.appspot.com',
         measurementId: 'YOUR_MEASUREMENT_ID',
       ),
     );
