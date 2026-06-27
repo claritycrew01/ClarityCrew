@@ -53,6 +53,7 @@ jobs:
           path: build/web
 
       - name: Deploy to Firebase
-        run: 'firebase deploy --only hosting --project claritycrew-aa67a --public build/web --token "$FIREBASE_TOKEN" || echo "Note: deploy may have exited with non-zero (harmless if version already active)"'
+        continue-on-error: true
+        run: firebase deploy --only hosting --project claritycrew-aa67a --public build/web --token "$FIREBASE_TOKEN"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
