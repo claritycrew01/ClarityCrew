@@ -66,12 +66,16 @@
   <script>
     window.addEventListener('load', function() {
       var loading = document.getElementById('loading');
-      _flutter.loader.load({
-        serviceWorkerSettings: {
-          serviceWorkerVersion: '1.0.0'
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: '1.0.0',
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          loading.remove();
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
         }
-      }).then(function() {
-        loading.style.display = 'none';
       });
     });
   </script>
