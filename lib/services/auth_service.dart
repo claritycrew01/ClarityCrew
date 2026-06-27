@@ -15,7 +15,15 @@ class AuthService {
       _auth = FirebaseAuth.instance;
       _firestore = FirebaseFirestore.instance;
     } catch (_) {
-      Future.delayed(const Duration(seconds: 3), _ensureFirebase);
+      Future.delayed(const Duration(milliseconds: 500), _ensureFirebase);
+    }
+  }
+
+  Future<void> _waitForFirebase() async {
+    if (_auth != null) return;
+    for (int i = 0; i < 30; i++) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (_auth != null) return;
     }
   }
 
@@ -25,6 +33,7 @@ class AuthService {
   bool get isSignedIn => _auth?.currentUser != null;
 
   Future<User?> signInWithEmail(String email, String password) async {
+    await _waitForFirebase();
     if (_auth == null || _firestore == null) return null;
     final result = await _auth!.signInWithEmailAndPassword(
       email: email,
@@ -36,6 +45,7 @@ class AuthService {
 
   Future<User?> signUpWithEmail(
       String email, String password, String displayName) async {
+    await _waitForFirebase();
     if (_auth == null || _firestore == null) return null;
     final result = await _auth!.createUserWithEmailAndPassword(
       email: email,
