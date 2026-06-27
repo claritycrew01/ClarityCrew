@@ -83,7 +83,7 @@ class _QuizScreenState extends State<QuizScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.quiz_outlined, size: 64,
-                    color: AppColors.textSecondary.withValues(alpha: 0.3)),
+                    color: AppColors.textSecondary.withOpacity( 0.3)),
                 const SizedBox(height: 16),
                 Text('No questions available.',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -155,7 +155,7 @@ class _QuizScreenState extends State<QuizScreen>
           child: LinearProgressIndicator(
             value: (_currentIndex + 1) / _questions.length,
             minHeight: 6,
-            backgroundColor: Colors.grey.withValues(alpha: 0.1),
+            backgroundColor: Colors.grey.withOpacity( 0.1),
             color: AppColors.calmTeal,
           ),
         ),
@@ -193,14 +193,14 @@ class _QuizScreenState extends State<QuizScreen>
               if (_showResult) {
                 if (isCorrect) {
                   borderColor = AppColors.success;
-                  bgColor = AppColors.success.withValues(alpha: 0.1);
+                  bgColor = AppColors.success.withOpacity( 0.1);
                 } else if (isSelected && !isCorrect) {
                   borderColor = AppColors.warmCoral;
-                  bgColor = AppColors.warmCoral.withValues(alpha: 0.1);
+                  bgColor = AppColors.warmCoral.withOpacity( 0.1);
                 }
               } else if (isSelected) {
                 borderColor = AppColors.calmTeal;
-                bgColor = AppColors.calmTeal.withValues(alpha: 0.08);
+                bgColor = AppColors.calmTeal.withOpacity( 0.08);
               }
 
               return Padding(
@@ -267,8 +267,8 @@ class _QuizScreenState extends State<QuizScreen>
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isCorrect
-            ? AppColors.success.withValues(alpha: 0.1)
-            : AppColors.warmCoral.withValues(alpha: 0.1),
+            ? AppColors.success.withOpacity( 0.1)
+            : AppColors.warmCoral.withOpacity( 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -351,7 +351,7 @@ class _QuizScreenState extends State<QuizScreen>
                 height: 120,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _getScoreColor(percentage).withValues(alpha: 0.12),
+                  color: _getScoreColor(percentage).withOpacity( 0.12),
                 ),
                 child: Center(
                   child: Text(

@@ -242,7 +242,7 @@ class _AccessibilitySettingsScreenState
       decoration: BoxDecoration(
         color: Theme.of(context).cardTheme.color,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+        border: Border.all(color: Colors.grey.withOpacity( 0.1)),
       ),
       child: Column(children: children),
     );

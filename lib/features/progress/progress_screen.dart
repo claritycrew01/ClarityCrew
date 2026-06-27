@@ -130,7 +130,7 @@ class ProgressScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
+        color: color.withOpacity( 0.08),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -163,7 +163,7 @@ class ProgressScreen extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: barValue.clamp(0.0, 1.0),
                 minHeight: 4,
-                backgroundColor: Colors.grey.withValues(alpha: 0.15),
+                backgroundColor: Colors.grey.withOpacity( 0.15),
                 color: color,
               ),
             ),
@@ -192,7 +192,7 @@ class ProgressScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.cardLight,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+            border: Border.all(color: Colors.grey.withOpacity( 0.1)),
           ),
           child: Column(
             children: weights.entries.map((entry) {
@@ -214,7 +214,7 @@ class ProgressScreen extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: entry.value,
                           minHeight: 8,
-                          backgroundColor: Colors.grey.withValues(alpha: 0.1),
+                          backgroundColor: Colors.grey.withOpacity( 0.1),
                           color: color,
                         ),
                       ),
@@ -262,7 +262,7 @@ class ProgressScreen extends StatelessWidget {
             child: Column(
               children: [
                 Icon(Icons.history_toggle_off,
-                    size: 48, color: AppColors.textSecondary.withValues(alpha: 0.3)),
+                    size: 48, color: AppColors.textSecondary.withOpacity( 0.3)),
                 const SizedBox(height: 12),
                 Text(
                   'No sessions yet. Start learning to see your progress!',
@@ -298,7 +298,7 @@ class ProgressScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.cardLight,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+              border: Border.all(color: Colors.grey.withOpacity( 0.1)),
             ),
             child: Row(
               children: [
@@ -307,8 +307,8 @@ class ProgressScreen extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: session.completed
-                        ? AppColors.success.withValues(alpha: 0.12)
-                        : AppColors.warmCoral.withValues(alpha: 0.12),
+                        ? AppColors.success.withOpacity( 0.12)
+                        : AppColors.warmCoral.withOpacity( 0.12),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -382,7 +382,7 @@ class ProgressScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.cardLight,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+            border: Border.all(color: Colors.grey.withOpacity( 0.1)),
           ),
           child: Column(
             children: [

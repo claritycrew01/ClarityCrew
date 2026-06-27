@@ -60,7 +60,7 @@ class _LearningSessionScreenState extends State<LearningSessionScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.menu_book_outlined, size: 64,
-                    color: AppColors.textSecondary.withValues(alpha: 0.3)),
+                    color: AppColors.textSecondary.withOpacity( 0.3)),
                 const SizedBox(height: 16),
                 Text('No lessons available.',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -121,7 +121,7 @@ class _LearningSessionScreenState extends State<LearningSessionScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: _getModeColor(content.contentType).withValues(alpha: 0.12),
+            color: _getModeColor(content.contentType).withOpacity( 0.12),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -157,7 +157,7 @@ class _LearningSessionScreenState extends State<LearningSessionScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withValues(alpha: 0.1),
+                  color: Colors.grey.withOpacity( 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -184,7 +184,7 @@ class _LearningSessionScreenState extends State<LearningSessionScreen> {
       decoration: BoxDecoration(
         color: AppColors.cardLight,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+        border: Border.all(color: Colors.grey.withOpacity( 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,7 +200,7 @@ class _LearningSessionScreenState extends State<LearningSessionScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: AppColors.softGold.withValues(alpha: 0.15),
+                color: AppColors.softGold.withOpacity( 0.15),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Text(
@@ -288,10 +288,10 @@ class _LearningSessionScreenState extends State<LearningSessionScreen> {
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.softPurple.withValues(alpha: 0.06),
+              color: AppColors.softPurple.withOpacity( 0.06),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: AppColors.softPurple.withValues(alpha: 0.15),
+                color: AppColors.softPurple.withOpacity( 0.15),
               ),
             ),
             child: Row(

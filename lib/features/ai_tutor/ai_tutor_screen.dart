@@ -171,15 +171,15 @@ class _AiTutorScreenState extends State<AiTutorScreen>
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                AppColors.calmTeal.withValues(alpha: 0.15),
-                AppColors.sereneBlue.withValues(alpha: 0.08),
+                AppColors.calmTeal.withOpacity( 0.15),
+                AppColors.sereneBlue.withOpacity( 0.08),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: AppColors.calmTeal.withValues(alpha: 0.3),
+              color: AppColors.calmTeal.withOpacity( 0.3),
             ),
           ),
           child: Row(
@@ -188,13 +188,13 @@ class _AiTutorScreenState extends State<AiTutorScreen>
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: AppColors.calmTeal.withValues(alpha: 0.2),
+                  color: AppColors.calmTeal.withOpacity( 0.2),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Icon(
                   Icons.auto_awesome,
-                  color: AppColors.calmTeal.withValues(
-                    alpha: 0.7 + _pulseController.value * 0.3,
+                  color: AppColors.calmTeal.withOpacity(
+                    0.7 + _pulseController.value * 0.3,
                   ),
                   size: 28,
                 ),
@@ -255,7 +255,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
           decoration: BoxDecoration(
             color: AppColors.cardLight,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+            border: Border.all(color: Colors.grey.withOpacity( 0.1)),
           ),
           child: Column(
             children: [
@@ -305,7 +305,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.15),
+              color: color.withOpacity( 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
@@ -375,12 +375,12 @@ class _AiTutorScreenState extends State<AiTutorScreen>
             decoration: BoxDecoration(
               color: AppColors.cardLight,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+              border: Border.all(color: Colors.grey.withOpacity( 0.1)),
             ),
             child: Row(
               children: [
                 Icon(Icons.auto_awesome,
-                    color: AppColors.textSecondary.withValues(alpha: 0.3)),
+                    color: AppColors.textSecondary.withOpacity( 0.3)),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -424,10 +424,10 @@ class _AiTutorScreenState extends State<AiTutorScreen>
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.06),
+              color: color.withOpacity( 0.06),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: color.withValues(alpha: 0.2),
+                color: color.withOpacity( 0.2),
               ),
             ),
             child: Row(
@@ -436,7 +436,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.15),
+                    color: color.withOpacity( 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
@@ -492,7 +492,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: color.withValues(alpha: 0.12),
+                        color: color.withOpacity( 0.12),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
@@ -545,7 +545,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
           decoration: BoxDecoration(
             color: AppColors.cardLight,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+            border: Border.all(color: Colors.grey.withOpacity( 0.1)),
           ),
           child: Column(
             children: [
@@ -712,9 +712,9 @@ class _AiTutorScreenState extends State<AiTutorScreen>
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.08),
+            color: color.withOpacity( 0.08),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: color.withValues(alpha: 0.15)),
+            border: Border.all(color: color.withOpacity( 0.15)),
           ),
           child: Column(
             children: [
@@ -745,12 +745,12 @@ class _AiTutorScreenState extends State<AiTutorScreen>
         decoration: BoxDecoration(
           color: AppColors.cardLight,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+          border: Border.all(color: Colors.grey.withOpacity( 0.1)),
         ),
         child: Row(
           children: [
             Icon(Icons.trending_up,
-                color: AppColors.textSecondary.withValues(alpha: 0.3)),
+                color: AppColors.textSecondary.withOpacity( 0.3)),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -824,7 +824,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
           decoration: BoxDecoration(
             color: AppColors.cardLight,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+            border: Border.all(color: Colors.grey.withOpacity( 0.1)),
           ),
           child: Column(
             children: [
@@ -852,7 +852,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: _trendColor(trend).withValues(alpha: 0.1),
+                  color: _trendColor(trend).withOpacity( 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -891,7 +891,7 @@ class _AiTutorScreenState extends State<AiTutorScreen>
           width: 52,
           height: 52,
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
+            color: color.withOpacity( 0.1),
             shape: BoxShape.circle,
           ),
           child: Center(

@@ -139,7 +139,7 @@ class _VideoScreenState extends State<VideoScreen> {
               children: [
                 Icon(Icons.videocam_off_outlined,
                     size: 64,
-                    color: AppColors.textSecondary.withValues(alpha: 0.3)),
+                    color: AppColors.textSecondary.withOpacity( 0.3)),
                 const SizedBox(height: 16),
                 Text(
                   'No videos available yet.',
@@ -257,7 +257,7 @@ class _VideoScreenState extends State<VideoScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: AppColors.sereneBlue.withValues(alpha: 0.1),
+            color: AppColors.sereneBlue.withOpacity( 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -272,7 +272,7 @@ class _VideoScreenState extends State<VideoScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: AppColors.softPurple.withValues(alpha: 0.1),
+            color: AppColors.softPurple.withOpacity( 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -304,8 +304,8 @@ class _VideoScreenState extends State<VideoScreen> {
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
             colors: [
-              AppColors.sereneBlue.withValues(alpha: 0.2),
-              AppColors.softPurple.withValues(alpha: 0.1),
+              AppColors.sereneBlue.withOpacity( 0.2),
+              AppColors.softPurple.withOpacity( 0.1),
             ],
           ),
         ),
@@ -331,7 +331,7 @@ class _VideoScreenState extends State<VideoScreen> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: Colors.black.withOpacity( 0.05),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -371,7 +371,7 @@ class _VideoScreenState extends State<VideoScreen> {
       decoration: BoxDecoration(
         color: AppColors.cardLight,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+        border: Border.all(color: Colors.grey.withOpacity( 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -412,10 +412,10 @@ class _VideoScreenState extends State<VideoScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.calmTeal.withValues(alpha: 0.06),
+        color: AppColors.calmTeal.withOpacity( 0.06),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: AppColors.calmTeal.withValues(alpha: 0.15),
+          color: AppColors.calmTeal.withOpacity( 0.15),
         ),
       ),
       child: Column(
@@ -445,7 +445,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     width: 22,
                     height: 22,
                     decoration: BoxDecoration(
-                      color: AppColors.calmTeal.withValues(alpha: 0.15),
+                      color: AppColors.calmTeal.withOpacity( 0.15),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Center(
@@ -517,9 +517,9 @@ class _VideoScreenState extends State<VideoScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.success.withValues(alpha: 0.1),
+        color: AppColors.success.withOpacity( 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.success.withValues(alpha: 0.2)),
+        border: Border.all(color: AppColors.success.withOpacity( 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

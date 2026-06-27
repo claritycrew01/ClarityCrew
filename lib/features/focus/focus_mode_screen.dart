@@ -104,7 +104,7 @@ class _FocusModeScreenState extends State<FocusModeScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
+        color: color.withOpacity( 0.12),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -147,7 +147,7 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                     child: CircularProgressIndicator(
                       value: progress,
                       strokeWidth: 8,
-                      backgroundColor: Colors.grey.withValues(alpha: 0.1),
+                      backgroundColor: Colors.grey.withOpacity( 0.1),
                       color: _focusState.isBreak
                           ? AppColors.softGold
                           : AppColors.calmTeal,
@@ -217,7 +217,7 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                 size: 32,
               ),
               style: IconButton.styleFrom(
-                backgroundColor: AppColors.calmTeal.withValues(alpha: 0.1),
+                backgroundColor: AppColors.calmTeal.withOpacity( 0.1),
                 padding: const EdgeInsets.all(16),
               ),
             ),
@@ -230,7 +230,7 @@ class _FocusModeScreenState extends State<FocusModeScreen>
               onPressed: () => _focusService.stop(),
               icon: const Icon(Icons.stop_rounded, size: 32),
               style: IconButton.styleFrom(
-                backgroundColor: AppColors.warmCoral.withValues(alpha: 0.1),
+                backgroundColor: AppColors.warmCoral.withOpacity( 0.1),
                 padding: const EdgeInsets.all(16),
               ),
             ),
@@ -244,7 +244,7 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                 onPressed: () => _focusService.startBreak(),
                 icon: const Icon(Icons.coffee_rounded, size: 32),
                 style: IconButton.styleFrom(
-                  backgroundColor: AppColors.softGold.withValues(alpha: 0.1),
+                  backgroundColor: AppColors.softGold.withOpacity( 0.1),
                   padding: const EdgeInsets.all(16),
                 ),
               ),
@@ -300,11 +300,11 @@ class _FocusModeScreenState extends State<FocusModeScreen>
           height: 56,
           decoration: BoxDecoration(
             color: selected
-                ? AppColors.calmTeal.withValues(alpha: 0.15)
+                ? AppColors.calmTeal.withOpacity( 0.15)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: selected ? AppColors.calmTeal : Colors.grey.withValues(alpha: 0.2),
+              color: selected ? AppColors.calmTeal : Colors.grey.withOpacity( 0.2),
               width: selected ? 2 : 1,
             ),
           ),

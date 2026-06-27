@@ -98,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              color: AppColors.calmTeal.withValues(alpha: 0.15),
+              color: AppColors.calmTeal.withOpacity( 0.15),
               borderRadius: BorderRadius.circular(30),
             ),
             child: const Icon(
@@ -191,13 +191,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     duration: const Duration(milliseconds: 200),
                     decoration: BoxDecoration(
                       color: selected
-                          ? AppColors.calmTeal.withValues(alpha: 0.15)
+                          ? AppColors.calmTeal.withOpacity( 0.15)
                           : Theme.of(context).cardTheme.color,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
                         color: selected
                             ? AppColors.calmTeal
-                            : Colors.grey.withValues(alpha: 0.2),
+                            : Colors.grey.withOpacity( 0.2),
                         width: selected ? 2 : 1,
                       ),
                     ),
