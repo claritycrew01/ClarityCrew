@@ -52,10 +52,10 @@ jobs:
           name: claritycrew-build
           path: build/web
 
-      - name: Authenticate with service account
-        run: echo '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}' > /tmp/gcp-key.json
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
 
       - name: Deploy to Firebase
         run: firebase deploy --only hosting --project claritycrew-aa67a --public build/web
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-key.json
