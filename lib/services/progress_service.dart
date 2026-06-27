@@ -3,17 +3,25 @@ import '../models/user_progress.dart';
 import '../utils/constants.dart';
 
 class ProgressService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseFirestore? _firestore;
+
+  ProgressService() {
+    try {
+      _firestore = FirebaseFirestore.instance;
+    } catch (_) {}
+  }
 
   Future<void> saveProgress(UserProgress progress) async {
-    await _firestore
+    if (_firestore == null) return;
+    await _firestore!
         .collection(AppConstants.collectionProgress)
         .doc(progress.id)
         .set(progress.toFirestore());
   }
 
   Future<UserProgress?> getProgress(String progressId) async {
-    final doc = await _firestore
+    if (_firestore == null) return null;
+    final doc = await _firestore!
         .collection(AppConstants.collectionProgress)
         .doc(progressId)
         .get();
@@ -23,7 +31,8 @@ class ProgressService {
 
   Future<List<UserProgress>> getUserCourseProgress(
       String userId, String courseId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionProgress)
         .where('userId', isEqualTo: userId)
         .where('courseId', isEqualTo: courseId)
@@ -36,7 +45,8 @@ class ProgressService {
 
   Future<double> getCourseCompletion(
       String userId, String courseId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return 0;
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionProgress)
         .where('userId', isEqualTo: userId)
         .where('courseId', isEqualTo: courseId)
@@ -46,7 +56,8 @@ class ProgressService {
   }
 
   Future<int> getUserStreak(String userId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return 0;
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionProgress)
         .where('userId', isEqualTo: userId)
         .orderBy('lastAccessed', descending: true)
@@ -63,7 +74,8 @@ class ProgressService {
 
   Future<List<RecentActivity>> getRecentActivity(
       String userId, {int limit = 10}) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionActivity)
         .where('userId', isEqualTo: userId)
         .orderBy('timestamp', descending: true)
@@ -75,7 +87,8 @@ class ProgressService {
   }
 
   Future<void> logActivity(RecentActivity activity) async {
-    await _firestore
+    if (_firestore == null) return;
+    await _firestore!
         .collection(AppConstants.collectionActivity)
         .doc(activity.id)
         .set(activity.toFirestore());

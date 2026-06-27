@@ -2,15 +2,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseAuth? _auth;
+  FirebaseFirestore? _firestore;
 
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
-  User? get currentUser => _auth.currentUser;
-  bool get isSignedIn => _auth.currentUser != null;
+  AuthService() {
+    try {
+      _auth = FirebaseAuth.instance;
+      _firestore = FirebaseFirestore.instance;
+    } catch (_) {}
+  }
+
+  Stream<User?> get authStateChanges =>
+    _auth?.authStateChanges() ?? const Stream.empty();
+  User? get currentUser => _auth?.currentUser;
+  bool get isSignedIn => _auth?.currentUser != null;
 
   Future<User?> signInWithEmail(String email, String password) async {
-    final result = await _auth.signInWithEmailAndPassword(
+    if (_auth == null || _firestore == null) return null;
+    final result = await _auth!.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -20,7 +29,8 @@ class AuthService {
 
   Future<User?> signUpWithEmail(
       String email, String password, String displayName) async {
-    final result = await _auth.createUserWithEmailAndPassword(
+    if (_auth == null || _firestore == null) return null;
+    final result = await _auth!.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -30,12 +40,14 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    if (_auth != null) {
+      await _auth!.signOut();
+    }
   }
 
   Future<void> _createUserProfile(
       String uid, String name, String email) async {
-    await _firestore.collection('users').doc(uid).set({
+    await _firestore!.collection('users').doc(uid).set({
       'displayName': name,
       'email': email,
       'createdAt': FieldValue.serverTimestamp(),
@@ -53,7 +65,7 @@ class AuthService {
   }
 
   Future<void> _updateLastActive(String uid) async {
-    await _firestore.collection('users').doc(uid).update({
+    await _firestore!.collection('users').doc(uid).update({
       'lastActive': FieldValue.serverTimestamp(),
     });
   }

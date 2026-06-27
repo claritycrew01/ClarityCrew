@@ -13,9 +13,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    await FirebaseService().initialize();
+    await FirebaseService().initialize().timeout(
+      const Duration(seconds: 5),
+    );
   } catch (e) {
-    // Firebase may not be configured yet; app runs in offline/mock mode
+    // Firebase init timed out or failed; app runs in offline/mock mode
   }
 
   runApp(

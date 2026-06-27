@@ -4,12 +4,19 @@ import '../models/user_progress.dart';
 import '../utils/constants.dart';
 
 class RecommendationService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseFirestore? _firestore;
+
+  RecommendationService() {
+    try {
+      _firestore = FirebaseFirestore.instance;
+    } catch (_) {}
+  }
 
   Future<List<Recommendation>> getUserRecommendations(
       String userId,
       {int limit = 5}) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionRecommendations)
         .where('userId', isEqualTo: userId)
         .where('seen', isEqualTo: false)
@@ -22,7 +29,8 @@ class RecommendationService {
   }
 
   Future<void> markRecommendationSeen(String recommendationId) async {
-    await _firestore
+    if (_firestore == null) return;
+    await _firestore!
         .collection(AppConstants.collectionRecommendations)
         .doc(recommendationId)
         .update({'seen': true});
@@ -30,6 +38,7 @@ class RecommendationService {
 
   Future<void> generateRecommendations(
       String userId, List<UserProgress> progress) async {
+    if (_firestore == null) return;
     final completedLessons = progress.where((p) => p.completed).toList();
     if (completedLessons.isEmpty) return;
 
@@ -61,6 +70,7 @@ class RecommendationService {
     String? courseId,
     String? subjectId,
   }) async {
+    if (_firestore == null) return;
     final recId = '${userId}_${type}_${id}_${DateTime.now().millisecondsSinceEpoch}';
     final recommendation = Recommendation(
       id: recId,
@@ -74,7 +84,7 @@ class RecommendationService {
       courseId: courseId,
       subjectId: subjectId,
     );
-    await _firestore
+    await _firestore!
         .collection(AppConstants.collectionRecommendations)
         .doc(recId)
         .set(recommendation.toFirestore());

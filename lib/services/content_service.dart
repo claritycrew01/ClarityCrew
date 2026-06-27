@@ -9,10 +9,17 @@ import '../models/exercise.dart';
 import '../utils/constants.dart';
 
 class ContentService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseFirestore? _firestore;
+
+  ContentService() {
+    try {
+      _firestore = FirebaseFirestore.instance;
+    } catch (_) {}
+  }
 
   Future<List<Course>> getCourses({String? category}) async {
-    Query query = _firestore
+    if (_firestore == null) return [];
+    Query query = _firestore!
         .collection(AppConstants.collectionCourses)
         .where('isPublished', isEqualTo: true)
         .orderBy('order');
@@ -28,14 +35,16 @@ class ContentService {
   }
 
   Future<Course?> getCourse(String courseId) async {
+    if (_firestore == null) return null;
     final doc =
-        await _firestore.collection(AppConstants.collectionCourses).doc(courseId).get();
+        await _firestore!.collection(AppConstants.collectionCourses).doc(courseId).get();
     if (!doc.exists) return null;
     return Course.fromFirestore(doc.data()! as Map<String, dynamic>, doc.id);
   }
 
   Future<List<Subject>> getSubjects(String courseId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionSubjects)
         .where('courseId', isEqualTo: courseId)
         .where('isPublished', isEqualTo: true)
@@ -47,7 +56,8 @@ class ContentService {
   }
 
   Future<Subject?> getSubject(String subjectId) async {
-    final doc = await _firestore
+    if (_firestore == null) return null;
+    final doc = await _firestore!
         .collection(AppConstants.collectionSubjects)
         .doc(subjectId)
         .get();
@@ -56,7 +66,8 @@ class ContentService {
   }
 
   Future<List<Unit>> getUnits(String subjectId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionUnits)
         .where('subjectId', isEqualTo: subjectId)
         .where('isPublished', isEqualTo: true)
@@ -68,7 +79,8 @@ class ContentService {
   }
 
   Future<Unit?> getUnit(String unitId) async {
-    final doc = await _firestore
+    if (_firestore == null) return null;
+    final doc = await _firestore!
         .collection(AppConstants.collectionUnits)
         .doc(unitId)
         .get();
@@ -77,7 +89,8 @@ class ContentService {
   }
 
   Future<List<Lesson>> getLessons(String unitId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionLessons)
         .where('unitId', isEqualTo: unitId)
         .where('isPublished', isEqualTo: true)
@@ -89,7 +102,8 @@ class ContentService {
   }
 
   Future<Lesson?> getLesson(String lessonId) async {
-    final doc = await _firestore
+    if (_firestore == null) return null;
+    final doc = await _firestore!
         .collection(AppConstants.collectionLessons)
         .doc(lessonId)
         .get();
@@ -98,7 +112,8 @@ class ContentService {
   }
 
   Future<List<QuizQuestion>> getQuizQuestions(String quizId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionQuizzes)
         .doc(quizId)
         .collection('questions')
@@ -110,7 +125,8 @@ class ContentService {
   }
 
   Future<List<Exercise>> getExercises(String lessonId) async {
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionExercises)
         .where('lessonId', isEqualTo: lessonId)
         .where('isPublished', isEqualTo: true)
@@ -122,8 +138,8 @@ class ContentService {
   }
 
   Future<List<Course>> searchContent(String query) async {
-    if (query.isEmpty) return [];
-    final snapshot = await _firestore
+    if (_firestore == null) return [];
+    final snapshot = await _firestore!
         .collection(AppConstants.collectionCourses)
         .where('isPublished', isEqualTo: true)
         .get();
@@ -142,11 +158,12 @@ class ContentService {
   }
 
   Future<void> importKolibriContent(Map<String, dynamic> kolibriData) async {
-    final batch = _firestore.batch();
+    if (_firestore == null) return;
+    final batch = _firestore!.batch();
 
     if (kolibriData.containsKey('courses')) {
       for (final courseData in kolibriData['courses'] as List) {
-        final docRef = _firestore
+        final docRef = _firestore!
             .collection(AppConstants.collectionCourses)
             .doc(courseData['id'] as String);
         batch.set(docRef, {
