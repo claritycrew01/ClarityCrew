@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Course content - readable by all authenticated users
+    match /courses/{courseId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    match /subjects/{subjectId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    match /units/{unitId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    match /lessons/{lessonId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    // Quizzes and exercises
+    match /quizzes/{quizId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.isAdmin == true;
+
+      match /questions/{questionId} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null && request.auth.token.isAdmin == true;
+      }
+    }
+
+    match /exercises/{exerciseId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+
+    // User progress - users can only read/write their own progress
+    match /user_progress/{progressId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+
+    match /recent_activity/{activityId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Recommendations
+    match /recommendations/{recId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow write: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Content sources (admin only)
+    match /content_sources/{sourceId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.isAdmin == true;
+    }
+  }
+}

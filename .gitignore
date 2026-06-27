@@ -1,0 +1,29 @@
+# Flutter
+.dart_tool/
+.packages
+build/
+*.iml
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Firebase
+.firebase/
+.firebaserc
+lib/firebase_options.dart
+
+# Android
+android/
+
+# iOS
+ios/
+
+# Test
+coverage/
+
+# Misc
+*.log
+.env
+.env.local
