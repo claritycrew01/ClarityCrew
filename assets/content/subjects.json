@@ -1,0 +1,9 @@
+[
+  {"id": "algebra", "name": "Algebra", "iconKey": "math", "colorKey": "math"},
+  {"id": "biology", "name": "Biology", "iconKey": "science", "colorKey": "science"},
+  {"id": "world_history", "name": "World History", "iconKey": "history", "colorKey": "history"},
+  {"id": "english", "name": "English", "iconKey": "reading", "colorKey": "reading"},
+  {"id": "chemistry", "name": "Chemistry", "iconKey": "science", "colorKey": "science"},
+  {"id": "geometry", "name": "Geometry", "iconKey": "math", "colorKey": "math"},
+  {"id": "us_history", "name": "US History", "iconKey": "history", "colorKey": "history"}
+]
