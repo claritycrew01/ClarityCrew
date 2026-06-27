@@ -71,13 +71,6 @@
       ]
     },
     {
-      "collectionGroup": "quizzes",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "lessonId", "order": "ASCENDING" }
-      ]
-    },
-    {
       "collectionGroup": "content_sources",
       "queryScope": "COLLECTION",
       "fields": [

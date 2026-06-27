@@ -1,0 +1,28 @@
+{
+  "name": "claritycrew01",
+  "version": "1.0.0",
+  "description": "A calm, accessible learning platform for neurodivergent students. Built with Flutter Web, Firebase, and Kolibri content integration.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "seed": "node scripts/seed_firestore.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/claritycrew01/ClarityCrew.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/claritycrew01/ClarityCrew/issues"
+  },
+  "homepage": "https://github.com/claritycrew01/ClarityCrew#readme",
+  "dependencies": {
+    "firebase-admin": "^14.1.0"
+  }
+}

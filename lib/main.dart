@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'services/firebase_service.dart';
 import 'providers/auth_provider.dart';
 import 'providers/course_provider.dart';
 import 'providers/lesson_provider.dart';
@@ -10,6 +11,7 @@ import 'app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseService();
 
   runApp(
     MultiProvider(
