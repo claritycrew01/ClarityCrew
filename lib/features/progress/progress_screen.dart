@@ -40,7 +40,7 @@ class ProgressScreen extends StatelessWidget {
                         CircularProgressIndicator(
                           value: overallProgress,
                           strokeWidth: 10,
-                          backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                          backgroundColor: theme.colorScheme.surfaceVariant,
                         ),
                         Center(
                           child: Text(

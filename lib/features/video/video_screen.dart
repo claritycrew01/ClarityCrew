@@ -25,7 +25,7 @@ class VideoScreen extends StatelessWidget {
           Container(
             height: 200,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainerHighest,
+              color: theme.colorScheme.surfaceVariant,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(

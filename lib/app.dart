@@ -24,8 +24,8 @@ class ClarityCrewApp extends StatelessWidget {
       title: 'ClarityCrew',
       debugShowCheckedModeBanner: false,
       navigatorKey: StudyNavigation.navigatorKey,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: ThemeMode.light,
       home: appState.isLoading
           ? const _SplashScreen()
@@ -45,12 +45,13 @@ class ClarityCrewApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         if (settings.name == '/video') {
           final video = settings.arguments;
+          final video = settings.arguments as dynamic;
           return MaterialPageRoute(
             builder: (_) => VideoScreen(video: video),
           );
         }
         if (settings.name == '/lesson') {
-          final lesson = settings.arguments;
+          final lesson = settings.arguments as dynamic;
           return MaterialPageRoute(
             builder: (_) => LearningSessionScreen(lesson: lesson),
           );

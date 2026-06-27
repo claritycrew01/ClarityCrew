@@ -27,7 +27,7 @@ class AppTheme {
         labelLarge: AppTypography.labelLarge,
         labelMedium: AppTypography.labelMedium,
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -89,7 +89,7 @@ class AppTheme {
         labelLarge: AppTypography.labelLarge.copyWith(color: AppColors.textOnDark),
         labelMedium: AppTypography.labelMedium.copyWith(color: AppColors.textOnDark),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

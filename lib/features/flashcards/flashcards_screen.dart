@@ -96,7 +96,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen>
                         child: isFront
                             ? _buildCardFace(
                                 card.title,
-                                card.icon,
+                                Icons.lightbulb,
                                 isFront: true,
                               )
                             : Transform(

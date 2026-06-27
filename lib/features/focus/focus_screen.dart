@@ -58,7 +58,7 @@ class _FocusScreenState extends State<FocusScreen>
                         shape: BoxShape.circle,
                         color: state.isFocused
                             ? Theme.of(context).colorScheme.primaryContainer
-                            : Theme.of(context).colorScheme.surfaceContainerHighest,
+                            : Theme.of(context).colorScheme.surfaceVariant,
                         border: Border.all(
                           color: Theme.of(context).colorScheme.primary,
                           width: 3,
@@ -68,7 +68,7 @@ class _FocusScreenState extends State<FocusScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            state.isFocused ? Icons.focus_center : Icons.timer,
+                            state.isFocused ? Icons.center_focus_strong : Icons.timer,
                             size: 48,
                             color: Theme.of(context).colorScheme.primary,
                           ),

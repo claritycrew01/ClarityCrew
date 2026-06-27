@@ -97,7 +97,7 @@ class _AITutorScreenState extends State<AITutorScreen> {
                           decoration: BoxDecoration(
                             color: isUser
                                 ? Theme.of(context).colorScheme.primaryContainer
-                                : Theme.of(context).colorScheme.surfaceContainerHighest,
+                                : Theme.of(context).colorScheme.surfaceVariant,
                             borderRadius: BorderRadius.circular(16).copyWith(
                               bottomRight: isUser ? const Radius.circular(4) : null,
                               bottomLeft: !isUser ? const Radius.circular(4) : null,
