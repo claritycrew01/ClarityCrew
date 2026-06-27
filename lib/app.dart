@@ -44,7 +44,6 @@ class ClarityCrewApp extends StatelessWidget {
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/video') {
-          final video = settings.arguments;
           final video = settings.arguments as dynamic;
           return MaterialPageRoute(
             builder: (_) => VideoScreen(video: video),
