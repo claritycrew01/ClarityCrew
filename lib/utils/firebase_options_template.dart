@@ -1,12 +1,12 @@
 class DefaultFirebaseOptions {
   static const FirebaseConfig current = FirebaseConfig(
-    apiKey: 'YOUR_API_KEY',
-    appId: 'YOUR_APP_ID',
-    messagingSenderId: 'YOUR_SENDER_ID',
+    apiKey: 'AIzaSyANMxrDnttSSj5-Em9QeaqRd3meKOo33lo',
+    appId: '1:684304642530:web:b65b6c299d15624ebf09bb',
+    messagingSenderId: '684304642530',
     projectId: 'claritycrew-aa67a',
     authDomain: 'claritycrew-aa67a.firebaseapp.com',
-    storageBucket: 'claritycrew-aa67a.appspot.com',
-    measurementId: 'YOUR_MEASUREMENT_ID',
+    storageBucket: 'claritycrew-aa67a.firebasestorage.app',
+    measurementId: 'G-CQR0FSNNVT',
   );
 }
 
