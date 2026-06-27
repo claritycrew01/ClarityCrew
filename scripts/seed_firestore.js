@@ -17,6 +17,10 @@ function toDocRef(collection, id) {
 
 // ===== HELPER: generate a lesson object =====
 function lesson(data) {
+  const defaultResources = [
+    { id: `${data.id}-vid`, title: `${data.title} - Video`, type: 'video', url: '#', durationSeconds: 600, source: 'manual' },
+    { id: `${data.id}-doc`, title: `${data.title} - Notes`, type: 'document', url: '#', durationSeconds: 0, source: 'manual' },
+  ];
   return {
     id: data.id,
     title: data.title,
@@ -27,7 +31,7 @@ function lesson(data) {
     overview: data.overview,
     notes: data.notes,
     revisionSummary: data.revisionSummary,
-    resources: data.resources || [],
+    resources: data.resources && data.resources.length > 0 ? data.resources : defaultResources,
     quizIds: data.quizIds || [],
     exerciseIds: data.exerciseIds || [],
     prerequisiteLessonIds: data.prerequisiteLessonIds || [],
