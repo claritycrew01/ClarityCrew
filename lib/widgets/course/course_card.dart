@@ -105,7 +105,7 @@ class CourseCard extends StatelessWidget {
       case 'icse':
         return Icons.library_books_outlined;
       case 'competitive_exams':
-        return Icons.trophy_outlined;
+        return Icons.emoji_events_outlined;
       case 'skill_learning':
         return Icons.rocket_launch_outlined;
       default:

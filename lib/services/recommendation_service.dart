@@ -17,7 +17,7 @@ class RecommendationService {
         .limit(limit)
         .get();
     return snapshot.docs
-        .map((doc) => Recommendation.fromFirestore(doc.data(), doc.id))
+        .map((doc) => Recommendation.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 

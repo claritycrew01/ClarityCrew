@@ -27,7 +27,7 @@ class _CourseSelectionScreenState extends State<CourseSelectionScreen> {
     {
       'id': 'competitive_exams',
       'label': 'Competitive',
-      'icon': Icons.trophy_outlined
+      'icon': Icons.emoji_events_outlined
     },
     {
       'id': 'skill_learning',

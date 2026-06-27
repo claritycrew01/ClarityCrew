@@ -23,7 +23,7 @@ class ContentService {
 
     final snapshot = await query.get();
     return snapshot.docs
-        .map((doc) => Course.fromFirestore(doc.data(), doc.id))
+        .map((doc) => Course.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -31,7 +31,7 @@ class ContentService {
     final doc =
         await _firestore.collection(AppConstants.collectionCourses).doc(courseId).get();
     if (!doc.exists) return null;
-    return Course.fromFirestore(doc.data()!, doc.id);
+    return Course.fromFirestore(doc.data()! as Map<String, dynamic>, doc.id);
   }
 
   Future<List<Subject>> getSubjects(String courseId) async {
@@ -42,7 +42,7 @@ class ContentService {
         .orderBy('order')
         .get();
     return snapshot.docs
-        .map((doc) => Subject.fromFirestore(doc.data(), doc.id))
+        .map((doc) => Subject.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -52,7 +52,7 @@ class ContentService {
         .doc(subjectId)
         .get();
     if (!doc.exists) return null;
-    return Subject.fromFirestore(doc.data()!, doc.id);
+    return Subject.fromFirestore(doc.data()! as Map<String, dynamic>, doc.id);
   }
 
   Future<List<Unit>> getUnits(String subjectId) async {
@@ -63,7 +63,7 @@ class ContentService {
         .orderBy('order')
         .get();
     return snapshot.docs
-        .map((doc) => Unit.fromFirestore(doc.data(), doc.id))
+        .map((doc) => Unit.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -73,7 +73,7 @@ class ContentService {
         .doc(unitId)
         .get();
     if (!doc.exists) return null;
-    return Unit.fromFirestore(doc.data()!, doc.id);
+    return Unit.fromFirestore(doc.data()! as Map<String, dynamic>, doc.id);
   }
 
   Future<List<Lesson>> getLessons(String unitId) async {
@@ -84,7 +84,7 @@ class ContentService {
         .orderBy('order')
         .get();
     return snapshot.docs
-        .map((doc) => Lesson.fromFirestore(doc.data(), doc.id))
+        .map((doc) => Lesson.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -94,7 +94,7 @@ class ContentService {
         .doc(lessonId)
         .get();
     if (!doc.exists) return null;
-    return Lesson.fromFirestore(doc.data()!, doc.id);
+    return Lesson.fromFirestore(doc.data()! as Map<String, dynamic>, doc.id);
   }
 
   Future<List<QuizQuestion>> getQuizQuestions(String quizId) async {
@@ -105,7 +105,7 @@ class ContentService {
         .orderBy('order')
         .get();
     return snapshot.docs
-        .map((doc) => QuizQuestion.fromFirestore(doc.data(), doc.id))
+        .map((doc) => QuizQuestion.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -117,7 +117,7 @@ class ContentService {
         .orderBy('order')
         .get();
     return snapshot.docs
-        .map((doc) => Exercise.fromFirestore(doc.data(), doc.id))
+        .map((doc) => Exercise.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -131,7 +131,7 @@ class ContentService {
     final results = <Course>[];
     final lowerQuery = query.toLowerCase();
     for (final doc in snapshot.docs) {
-      final course = Course.fromFirestore(doc.data(), doc.id);
+      final course = Course.fromFirestore(doc.data() as Map<String, dynamic>, doc.id);
       if (course.title.toLowerCase().contains(lowerQuery) ||
           course.description.toLowerCase().contains(lowerQuery)) {
         results.add(course);

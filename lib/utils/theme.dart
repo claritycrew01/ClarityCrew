@@ -170,8 +170,8 @@ class ClarityTheme {
   );
 
   static CheckboxThemeData get _checkboxTheme => CheckboxThemeData(
-        fillColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
+        fillColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
             return ClarityColors.primary;
           }
           return Colors.transparent;

@@ -18,7 +18,7 @@ class ProgressService {
         .doc(progressId)
         .get();
     if (!doc.exists) return null;
-    return UserProgress.fromFirestore(doc.data()!, doc.id);
+    return UserProgress.fromFirestore(doc.data()! as Map<String, dynamic>, doc.id);
   }
 
   Future<List<UserProgress>> getUserCourseProgress(
@@ -30,7 +30,7 @@ class ProgressService {
         .orderBy('lastAccessed', descending: true)
         .get();
     return snapshot.docs
-        .map((doc) => UserProgress.fromFirestore(doc.data(), doc.id))
+        .map((doc) => UserProgress.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -56,7 +56,7 @@ class ProgressService {
     if (snapshot.docs.isEmpty) return 0;
 
     final streaks = snapshot.docs
-        .map((doc) => UserProgress.fromFirestore(doc.data(), doc.id).streak)
+        .map((doc) => UserProgress.fromFirestore(doc.data() as Map<String, dynamic>, doc.id).streak)
         .toList();
     return streaks.isNotEmpty ? streaks.first : 0;
   }
@@ -70,7 +70,7 @@ class ProgressService {
         .limit(limit)
         .get();
     return snapshot.docs
-        .map((doc) => RecentActivity.fromFirestore(doc.data(), doc.id))
+        .map((doc) => RecentActivity.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 

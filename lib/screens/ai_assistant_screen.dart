@@ -137,7 +137,7 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
             ],
           ),
           const SizedBox(height: 20),
-          const Text('Try these features:',
+          Text('Try these features:',
               style: ClarityTypography.titleSmall),
           const SizedBox(height: 12),
           AIFeatureCard(
