@@ -34,9 +34,17 @@ lib/
 
 You don't need Flutter installed locally. The GitHub Action in `.github/workflows/deploy.yml` handles everything:
 
-1. Create a Firebase project named `claritycrew`
-2. Run `firebase login:ci` locally (one-time) to get a token
-3. Add the token as `FIREBASE_TOKEN` in your repo → Settings → Secrets
+1. Create a Firebase project named `claritycrew` at https://console.firebase.google.com
+2. Create a service account key:
+   - Go to https://console.cloud.google.com/apis/credentials
+   - Click **Create credentials** → **Service account**, name it `claritycrew-deploy`
+   - Assign role **Firebase Admin**, click Done
+   - Open the account → **Keys** tab → **Add key** → **Create new key** → **JSON**
+   - A file will download — open it and copy the entire contents
+3. Add the key to GitHub:
+   - Go to repo → **Settings** → **Secrets and variables** → **Actions**
+   - Click **New repository secret**, name it `GCP_SERVICE_ACCOUNT_KEY`
+   - Paste the entire JSON content, click **Add secret**
 4. Push to `master` — the Action will build and deploy automatically
 
 ## Local Setup (optional)
