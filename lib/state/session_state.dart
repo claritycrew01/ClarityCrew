@@ -1,72 +1,142 @@
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 import '../models/session_record.dart';
 import '../models/interaction_event.dart';
+import '../models/content_item.dart';
 import '../persistence/local_storage_repository.dart';
-import '../services/content/session_analyzer.dart';
 
 class SessionState extends ChangeNotifier {
-  SessionState(this._repository, this._analyzer);
-
-  final LocalStorageRepository _repository;
-  final SessionAnalyzer _analyzer;
+  final LocalStorageRepository _repo = LocalStorageRepository();
+  final Uuid _uuid = const Uuid();
 
   List<SessionRecord> _sessions = [];
   SessionRecord? _currentSession;
-  List<InteractionEvent> _pendingInteractions = [];
+  bool _isLoading = true;
+  int _activeContentIndex = 0;
+  List<ContentItem> _activeContent = [];
+  bool _isInSession = false;
 
   List<SessionRecord> get sessions => _sessions;
   SessionRecord? get currentSession => _currentSession;
-  List<InteractionEvent> get pendingInteractions => _pendingInteractions;
+  bool get isLoading => _isLoading;
+  bool get isInSession => _isInSession;
+  List<ContentItem> get activeContent => _activeContent;
+  int get activeContentIndex => _activeContentIndex;
+  ContentItem? get currentContent =>
+      _activeContent.isNotEmpty && _activeContentIndex < _activeContent.length
+          ? _activeContent[_activeContentIndex]
+          : null;
 
-  Future<void> loadSessions() async {
-    _sessions = _repository.loadSessions();
+  SessionState() {
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    _sessions = await _repo.loadSessionHistory();
+    _isLoading = false;
     notifyListeners();
   }
 
-  void startSession(String sessionType, List<String> topicTags) {
+  void startSession(String learnerId, {String type = 'general'}) {
     _currentSession = SessionRecord(
-      id: 'session_${DateTime.now().millisecondsSinceEpoch}',
-      learnerId: 'user',
+      id: _uuid.v4(),
+      learnerId: learnerId,
       startTime: DateTime.now(),
-      sessionType: sessionType,
-      topicTags: topicTags,
+      sessionType: type,
     );
-    _pendingInteractions = [];
+    _isInSession = true;
+    _activeContentIndex = 0;
     notifyListeners();
+  }
+
+  void setActiveContent(List<ContentItem> content, {String? startContentId}) {
+    _activeContent = content;
+    _activeContentIndex = 0;
+    if (startContentId != null) {
+      final index = content.indexWhere((item) => item.id == startContentId);
+      if (index >= 0) {
+        _activeContentIndex = index;
+      }
+    }
+    notifyListeners();
+  }
+
+  void advanceContent() {
+    if (_activeContentIndex < _activeContent.length - 1) {
+      _activeContentIndex++;
+      notifyListeners();
+    }
+  }
+
+  void goBackContent() {
+    if (_activeContentIndex > 0) {
+      _activeContentIndex--;
+      notifyListeners();
+    }
   }
 
   void recordInteraction(InteractionEvent event) {
-    _pendingInteractions.add(event);
+    if (_currentSession == null) return;
+    final updatedInteractions = [
+      ..._currentSession!.interactions,
+      event,
+    ];
+    _currentSession = _currentSession!.copyWith(
+      interactions: updatedInteractions,
+    );
     notifyListeners();
   }
 
-  Future<void> endSession({bool completed = true}) async {
+  Future<void> endSession({
+    double engagementScore = 0.0,
+    double comprehensionScore = 0.0,
+    bool completed = false,
+  }) async {
     if (_currentSession == null) return;
 
-    final engagement = _analyzer.calculateEngagementScore(_pendingInteractions);
-    final comprehension =
-        _analyzer.calculateComprehensionScore(_pendingInteractions);
-    final duration = DateTime.now().difference(_currentSession!.startTime);
-
-    final finished = _currentSession!.copyWith(
+    final ended = _currentSession!.copyWith(
       endTime: DateTime.now(),
-      durationSeconds: duration.inSeconds,
-      interactions: _pendingInteractions,
-      engagementScore: engagement,
-      comprehensionScore: comprehension,
+      durationSeconds:
+          DateTime.now().difference(_currentSession!.startTime).inSeconds,
+      engagementScore: engagementScore,
+      comprehensionScore: comprehensionScore,
       completed: completed,
     );
 
-    _sessions.add(finished);
-    await _repository.saveSession(finished);
-    await _repository.saveInteractions(_pendingInteractions);
-
+    _sessions = [..._sessions, ended];
     _currentSession = null;
-    _pendingInteractions = [];
+    _isInSession = false;
+    _activeContent = [];
+    _activeContentIndex = 0;
+
+    await _repo.saveSessionHistory(_sessions);
     notifyListeners();
   }
 
-  List<SessionRecord> getSessionsBySubject(String subject) {
-    return _sessions.where((s) => s.topicTags.contains(subject)).toList();
+  Future<void> clearHistory() async {
+    _sessions = [];
+    await _repo.saveSessionHistory(_sessions);
+    notifyListeners();
+  }
+
+  List<SessionRecord> getRecentSessions({int count = 10}) {
+    if (_sessions.isEmpty) return [];
+    final sorted = List<SessionRecord>.from(_sessions)
+      ..sort((a, b) => b.startTime.compareTo(a.startTime));
+    return sorted.take(count).toList();
+  }
+
+  double get averageEngagement {
+    if (_sessions.isEmpty) return 0.0;
+    return _sessions
+            .fold<double>(0.0, (s, r) => s + r.engagementScore) /
+        _sessions.length;
+  }
+
+  double get averageComprehension {
+    if (_sessions.isEmpty) return 0.0;
+    return _sessions
+            .fold<double>(0.0, (s, r) => s + r.comprehensionScore) /
+        _sessions.length;
   }
 }

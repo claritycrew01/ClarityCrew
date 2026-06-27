@@ -1,36 +1,37 @@
 import 'dart:convert';
+
+import '../core/constants.dart';
 import 'shared_preferences_adapter.dart';
 
 class VideoProgressStorage {
-  VideoProgressStorage(this._adapter);
-
-  final SharedPreferencesAdapter _adapter;
-
-  Future<void> saveProgress(String videoId, double position) async {
-    final all = loadAllProgress();
-    all[videoId] = position;
-    await _adapter.setString('video_progress', jsonEncode(all));
-  }
-
-  double loadProgress(String videoId) {
-    final all = loadAllProgress();
-    return all[videoId] ?? 0.0;
-  }
-
-  Map<String, double> loadAllProgress() {
-    final json = _adapter.getString('video_progress');
+  Future<Map<String, dynamic>> loadAll() async {
+    final json =
+        SharedPrefsAdapter.getString(AppConstants.prefVideoProgress);
     if (json == null) return {};
-    final decoded = jsonDecode(json) as Map<String, dynamic>;
-    return decoded.map((k, v) => MapEntry(k, (v as num).toDouble()));
+    return jsonDecode(json) as Map<String, dynamic>;
   }
 
-  Future<void> clearProgress(String videoId) async {
-    final all = loadAllProgress();
-    all.remove(videoId);
-    await _adapter.setString('video_progress', jsonEncode(all));
+  Future<Map<String, dynamic>?> loadForVideo(String videoId) async {
+    final all = await loadAll();
+    final entry = all[videoId];
+    if (entry is Map<String, dynamic>) return entry;
+    return null;
   }
 
-  Future<void> clearAll() async {
-    await _adapter.remove('video_progress');
+  Future<void> saveForVideo(
+    String videoId, {
+    required bool watched,
+    int positionMs = 0,
+  }) async {
+    final all = await loadAll();
+    all[videoId] = {
+      'watched': watched,
+      'positionMs': positionMs,
+      'updatedAt': DateTime.now().toIso8601String(),
+    };
+    await SharedPrefsAdapter.setString(
+      AppConstants.prefVideoProgress,
+      jsonEncode(all),
+    );
   }
 }

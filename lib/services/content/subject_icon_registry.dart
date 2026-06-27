@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 
 class SubjectIconRegistry {
-  static const Map<String, IconData> icons = {
-    'math': Icons.calculate,
-    'reading': Icons.menu_book,
-    'writing': Icons.edit,
-    'science': Icons.science,
-    'history': Icons.history_edu,
-    'art': Icons.palette,
-    'music': Icons.music_note,
+  static const _icons = <String, IconData>{
+    'calculate_outlined': Icons.calculate_outlined,
+    'biotech_outlined': Icons.biotech_outlined,
+    'public_outlined': Icons.public_outlined,
+    'menu_book_outlined': Icons.menu_book_outlined,
+    'science_outlined': Icons.science_outlined,
+    'category_outlined': Icons.category_outlined,
+    'flag_outlined': Icons.flag_outlined,
   };
 
-  static const Map<String, Color> colors = {
-    'math': Color(0xFF4A90D9),
-    'reading': Color(0xFF50C878),
-    'writing': Color(0xFFE8833A),
-    'science': Color(0xFF9B59B6),
-    'history': Color(0xFFE74C3C),
-    'art': Color(0xFFF39C12),
-    'music': Color(0xFF1ABC9C),
-  };
+  static IconData iconFor(String iconKey) =>
+      _icons[iconKey] ?? Icons.school_outlined;
 
-  static IconData getIcon(String key) => icons[key] ?? Icons.school;
-  static Color getColor(String key) => colors[key] ?? Colors.grey;
+  static Color colorFromHex(String hex) {
+    final value = hex.replaceFirst('#', '');
+    return Color(int.parse('FF$value', radix: 16));
+  }
 }

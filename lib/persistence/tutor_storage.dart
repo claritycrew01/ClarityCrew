@@ -1,22 +1,31 @@
+import '../core/constants.dart';
 import '../models/tutor_message.dart';
 import 'shared_preferences_adapter.dart';
 
 class TutorStorage {
-  TutorStorage(this._adapter);
+  static const _maxMessages = 50;
 
-  final SharedPreferencesAdapter _adapter;
-
-  Future<void> saveConversation(TutorConversation conversation) async {
-    await _adapter.setString('tutor_conversation', conversation.toJsonString());
-  }
-
-  TutorConversation loadConversation() {
-    final json = _adapter.getString('tutor_conversation');
-    if (json == null) return const TutorConversation();
+  Future<TutorConversation> loadConversation() async {
+    final json =
+        SharedPrefsAdapter.getString(AppConstants.prefTutorConversation);
+    if (json == null) {
+      return const TutorConversation();
+    }
     return TutorConversation.fromJsonString(json);
   }
 
-  Future<void> clearConversation() async {
-    await _adapter.remove('tutor_conversation');
+  Future<void> saveConversation(TutorConversation conversation) async {
+    final trimmed = conversation.messages.length > _maxMessages
+        ? conversation.messages
+            .sublist(conversation.messages.length - _maxMessages)
+        : conversation.messages;
+    final payload = TutorConversation(
+      messages: trimmed,
+      lastContentId: conversation.lastContentId,
+    );
+    await SharedPrefsAdapter.setString(
+      AppConstants.prefTutorConversation,
+      payload.toJsonString(),
+    );
   }
 }
