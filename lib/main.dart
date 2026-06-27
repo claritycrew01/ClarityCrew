@@ -9,8 +9,6 @@ import 'providers/ai_provider.dart';
 import 'services/firebase_service.dart';
 import 'app.dart';
 
-const String appVersion = '1.0.0';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

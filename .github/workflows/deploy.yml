@@ -3,15 +3,6 @@ name: Build & Deploy
 on:
   push:
     branches: [master, main]
-    paths:
-      - 'lib/**'
-      - 'pubspec.yaml'
-      - 'pubspec.lock'
-      - 'web/**'
-      - '.github/workflows/deploy.yml'
-      - 'firebase.json'
-      - 'firestore.rules'
-      - 'firestore.indexes.json'
   workflow_dispatch:
 
 concurrency:
